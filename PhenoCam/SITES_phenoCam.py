@@ -46,8 +46,9 @@ Limitations of the script:
     d) Roipoly package doesn't work properly in Spyder. No issues running through the Terminal though.
 
 Example Data:
-    # Freely downloadable from SITES data portal under SITES Spectral thematic program. 
-    Link to SITES data portal: https://data.fieldsites.se/portal/
+    # Freely downloadable from SITES data portal under SITES Spectral thematic program.
+    One example data:  https://meta.fieldsites.se/objects/Y156yelfNlRX21Ny8XWERQnY
+    Find more data in the SITES data portal: https://data.fieldsites.se/portal/
 
 For enquiries, please send an email to: shangharsha.thapa@nateko.lu.se
                                         lars.eklundh@nateko.lu.se
