@@ -56,14 +56,15 @@ QC_data_final_SITES$PA <- QC_data_final_SITES$PA*100
 
 
 #What does the SITES data contain in their uploaded data?
+# You can create as many outputs as you like. Just add another "col_daily_(NEXT Number) to the scheme below. Put the parameters you want to have included in the brackets behind it. Follow the same scheme as with the others. Use the SITES parameters!
 
 #Meteorological DAILY
-col_daily_met <- c("TIMESTAMP","TA_1_SHIELD","TA_2_VENT","RH_SHIELD","VP_SHIELD","SW_IN","PPFD","WS","WV","WD","WD_STD","WS_MAX","TIME_WS_MAX","WS_CUBED","P","PA") 
+col_daily_1 <- c("TIMESTAMP","TA_1_SHIELD","TA_2_VENT","RH_SHIELD","VP_SHIELD","SW_IN","PPFD","WS","WV","WD","WD_STD","WS_MAX","TIME_WS_MAX","WS_CUBED","P","PA") 
 
 #Water temperature profile DAILY
-col_daily_profile <- c("TIMESTAMP","TW_-1m","TW_-3m","TW_-15m")
+col_daily_2 <- c("TIMESTAMP","TW_-1m","TW_-3m","TW_-15m")
 
 #Water level DAILY
-col_daily_lvl<- c("TIMESTAMP",	"LL")
+col_daily_3 <- c("TIMESTAMP",	"LL")
 
 

@@ -81,6 +81,7 @@ thresholds_used <- read_lines(threshold_file)
 
 #### Load SITES parameters ####
 SITES_Parameters <- readline(prompt="Enter name of SITES parameter file including extension (.R):")
+source(paste(SITES_Parameters))
 
 #### Get user input where the output should be saved ####
 output_save_location <- readline(prompt="Enter the path where the Output (Folder for SITES and QC) should be saved. (Leaving it empty will save all the files in the folder where the script was opened): ")
@@ -1107,41 +1108,30 @@ QC_data_final_SITES <- QC_data_final
 
 
 
-#### OUTPUT FOR DAILY ###
-if (time_intervall == 1440) {
-source(paste(SITES_Parameters))
-
-### Meteorological data ###
-QC_data_final_SITES_MET <- QC_data_final_SITES[, col_daily_met]
-write.csv(QC_data_final_SITES_MET, file.path(output_save_location_SITES,"QC_data_daily_met_SITES.csv"), row.names = FALSE)
 
 
-### Profile Temp data ###
-QC_data_final_SITES_PRO <- QC_data_final_SITES[, col_daily_profile]
-write.csv(QC_data_final_SITES_PRO, file.path(output_save_location_SITES,"QC_data_daily_profile_SITES.csv"), row.names = FALSE)
+#### OUTPUT FOR SITES ####
+  
+# Count how many different SITES outputs were predefined in the SITES_parameters file
+count_SITES_total<- length((ls(pattern = "col_daily_")))
 
-### Water Level data ###
-QC_data_final_SITES_LVL <- QC_data_final_SITES[, col_daily_lvl]
-write.csv(QC_data_final_SITES_LVL, file.path(output_save_location_SITES,"QC_data_daily_level_SITES.csv"), row.names = FALSE)
+#Start with number 1
+count_SITES <- 1
+
+
+while(count_SITES <= count_SITES_total){
+  #Create the new variable to create the SITES output. Changes with each circle of the loop
+  SITES_output_variable <- paste("col_daily_",count_SITES, sep="")
+  
+  #R takes the info from the SITES_parameters file
+  QC_SITES_PLOT <- QC_data_final_SITES[, (get(SITES_output_variable))]
+  
+  write.csv(QC_SITES_PLOT, file.path(output_save_location_SITES,paste0("QC_data_hourly_",count_SITES,"_SITES.csv")), row.names = FALSE)
+  
+  count_SITES <- count_SITES+1
+  
 }
 
-#### OUTPUT FOR HOURLY ###
-if (time_intervall == 60) {
-  source(paste(SITES_Parameters))
-  
-### Meteorological data ###
-QC_data_final_SITES_MET <- QC_data_final_SITES[, col_daily_met]
-write.csv(QC_data_final_SITES_MET, file.path(output_save_location_SITES,"QC_data_hourly_met_SITES.csv"), row.names = FALSE)
-  
-  
-### Profile Temp data ###
-QC_data_final_SITES_PRO <- QC_data_final_SITES[, col_daily_profile]
-write.csv(QC_data_final_SITES_PRO, file.path(output_save_location_SITES,"QC_data_hourly_profile_SITES.csv"), row.names = FALSE)
-  
-### Water Level data ###
-QC_data_final_SITES_LVL <- QC_data_final_SITES[, col_daily_lvl]
-write.csv(QC_data_final_SITES_LVL, file.path(output_save_location_SITES,"QC_data_hourly_level_SITES.csv"), row.names = FALSE)
-}
 
 print("SITES Output created")
 
