@@ -33,10 +33,11 @@ Instructions for running the script:
     f) Follow the instructions displayed on the screen once you run the script.
        
 Limitations of the script:
-    a) Script can only upload .zip files and not the indvidual data product.
-    b) Script can only upload Level 1, Level 2, and Level 3 data levels. The script can handle Level 0 raw data  
+    a) Script can only upload one station data at one time.
+    b) Script can only upload .zip files and not the indvidual data product.
+    c) Script can only upload Level 1, Level 2, and Level 3 data levels. The script can handle Level 0 raw data  
        uploads once the portal is ready to host it.
-    c) Cookie copied from the SITES data portal 'My Account' page is valid only for 24 hours.
+    d) Cookie copied from the SITES data portal 'My Account' page is valid only for 24 hours.
 
 Important information:    
     a) Instructions for uploading data objects: https://github.com/ICOS-Carbon-Portal/data
@@ -342,13 +343,11 @@ for file in files2upload:
         curlData = 'curl -H "Host: data.fieldsites.se" -H "Transfer-Encoding: chunked" -H "Cookie: {}" --upload-file {} {}'.format(cookie, os.path.join(os.getcwd(), file), metaURL)
         f1.write('{}\n\n'.format(curlData))
         print('\n')
-        print('\n')
         #print(curlData)
         
         # Use getstatusoutput to display the PID
         status, PID = subprocess.getstatusoutput(curlData)
         f1.write('{}\n\n'.format(PID))
-        print('\n')
         print('\n')
         #print(PID)
         print('{} uploaded successfully into SITES data portal'.format(file))    
@@ -363,6 +362,7 @@ f1.close()
 # Delete all the created .json files
 [os.remove(f) for f in glob.glob('*.json')]
 
+print('\n')
 print ('Finished uploading all .zip files within the defined path.')
 print ('Check the log.txt file for upload status and PID after running the script.')
 print ('It might take few hours until it is visible in the data portal.')
