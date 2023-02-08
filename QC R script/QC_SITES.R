@@ -81,7 +81,6 @@ thresholds_used <- read_lines(threshold_file)
 
 #### Load SITES parameters ####
 SITES_Parameters <- readline(prompt="Enter name of SITES parameter file including extension (.R):")
-source(paste(SITES_Parameters))
 
 #### Get user input where the output should be saved ####
 output_save_location <- readline(prompt="Enter the path where the Output (Folder for SITES and QC) should be saved. (Leaving it empty will save all the files in the folder where the script was opened): ")
@@ -1108,7 +1107,8 @@ QC_data_final_SITES <- QC_data_final
 
 
 
-
+### Load the SITES parameters file
+source(paste(SITES_Parameters))
 
 #### OUTPUT FOR SITES ####
   
