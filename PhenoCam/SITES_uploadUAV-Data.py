@@ -294,7 +294,7 @@ for file in glob.glob("*.zip"):
             ################################################################################################################
             if count == 1:
                 cookie = input("Please enter your Cookie characters: ")
-            
+                
                 # Initiate curl command to upload the metadata into the portal 
                 curlCommand = 'curl -s -H "Host: meta.fieldsites.se" -H "Content-Type: application/json" -H "Cookie: {}" -X POST -d @{} https://meta.fieldsites.se/upload'.format(cookie, jsonFile)
                 
@@ -322,6 +322,7 @@ for file in glob.glob("*.zip"):
                 print ('{} uploaded successfully into SITES data portal'.format(file))
                 
             else:
+                
                 # Initiate curl command to upload the metadata into the portal 
                 curlCommand = 'curl -s -H "Host: meta.fieldsites.se" -H "Content-Type: application/json" -H "Cookie: {}" -X POST -d @{} https://meta.fieldsites.se/upload'.format(cookie, jsonFile)
                     
@@ -354,7 +355,7 @@ f1.close()
 
 # Delete all the created .json files
 [os.remove(f) for f in glob.glob('*.json')]
-                
+        
 print ('Finished uploading all .zip files within the defined path.')
 print ('Check the log.txt file for upload status and PID after running the script.')
 print ('It might take few hours until it is visible in the data portal.')
