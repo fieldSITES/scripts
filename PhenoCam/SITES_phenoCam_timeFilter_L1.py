@@ -34,8 +34,6 @@ Limitations of the script:
 For enquiries, please send an email to: shangharsha.thapa@nateko.lu.se
                                         lars.eklundh@nateko.lu.se
                                         
-This code uses the user defined time threshold for filtering out phenocamera images.
-
 @author: Shangharsha
 
 ***************************************************************************************************************
