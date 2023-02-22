@@ -418,7 +418,7 @@ sortedDF.to_csv(fileName, index=False)
 # Finding mean vegetation indices values from all valid images within a given DOY
 ################################################################################################################
         
-# Dictionaries to store mean indices per day from valid images (Excluding no data values for a DOY)
+# Dictionaries to store mean indices per day (Excluding no data values for a DOY)
 avgGCC = {}
 avgRCC = {}
 avgR = {}
@@ -432,10 +432,10 @@ stdRCC = {}
 nbrImgAvg = {}
 QFLAG = {}
 
-# Assigning path to create new text file for storing daily averaged indices values
+# Define path for new text file to store the daily averaged time series metrics
 path_avgGCC = os.path.join(thePath + r'\CSV\avgGCC1Day.txt')
 
-# Headers to be appended to the text file
+# Multiple line header defintion
 header1 = "TIMESTAMP DOY RED_ROI_1 GREEN_ROI_1 BLUE_ROI_1 GCC_ROI_1 GCC_STD_1 RCC_ROI_1 RCC_STD_1 NO._IMG_AVG AGL_SUN_MAX QFLAG_ROI_1"
 header2 = "YYYY-MM-DD None DN DN DN Fraction None Fraction None Count Degree Class"
 
@@ -446,12 +446,12 @@ f4 = open(path_avgGCC, 'w')
 f4.write(header1 + "\n")
 f4.write(header2 + "\n")
 
-# Iterating over all dictionary keys, value pairs and average the items
+# Iterating over all dictionary key-value pairs and average the items
 for (k, v), (k1, v1), (k2, v2), (k3, v3), (k4, v4), (k5, v5), (k6, v6), (k7, v7) in zip(sorted(GCCdict1day.items()), \
     sorted(RCCdict1day.items()), sorted(Reddict1day.items()), sorted(Grndict1day.items()), sorted(Bludict1day.items()), \
     sorted(SnowdictTag.items()), sorted(SElevnClass.items()), sorted(SolarAngles.items())):
     
-    # val, val2 is the lists of GCC, & RCC values of all valid images on that DOY
+    # v, v1, v2, etc is the lists of GCC & RCC values on that DOY
     avgGCC[k] = round(sum(v)/len(v), 5)
     stdGCC[k] = round(statistics.pstdev(v), 5)
     nbrImgAvg[k] = len(v)
@@ -464,19 +464,19 @@ for (k, v), (k1, v1), (k2, v2), (k3, v3), (k4, v4), (k5, v5), (k6, v6), (k7, v7)
     solC[k6] = max(v6)
     sElv[k7] = max(v7)
     
-    ###################################################################################################
+    ############################################################################################################
     '''
     Defining quality flagging scheme for each DOY based on number of images for computing daily average, 
     presence or absence of snow and solar elevation angle
     '''
-    ###################################################################################################
+    ############################################################################################################
     
     if sTag[k5] == 1:
         QFLAG[k] = 100
     
-    ##########################################################################
+    ############################################################################################################
     # Valid only for half hourly temporal resolution
-    ##########################################################################  
+    ############################################################################################################  
     elif (nbrImgAvg[k] < 3) and (solC[k6] == 1):
         QFLAG[k] = 211
         
@@ -504,47 +504,47 @@ for (k, v), (k1, v1), (k2, v2), (k3, v3), (k4, v4), (k5, v5), (k6, v6), (k7, v7)
     elif (nbrImgAvg[k] >= 6) and (solC[k6] == 3):
         QFLAG[k] = 233 
     
-    
-    ##########################################################################
+    '''
+    ############################################################################################################
     # Valid only for hourly temporal resolution
-    ##########################################################################
-    # elif (nbrImgAvg[k] < 2) and (solC[k6] == 1):
-    #     QFLAG[k] = 211
+    ############################################################################################################
+    elif (nbrImgAvg[k] < 2) and (solC[k6] == 1):
+        QFLAG[k] = 211
         
-    # elif (nbrImgAvg[k] < 2) and (solC[k6] == 2):
-    #     QFLAG[k] = 212
+    elif (nbrImgAvg[k] < 2) and (solC[k6] == 2):
+        QFLAG[k] = 212
     
-    # elif (nbrImgAvg[k] < 2) and (solC[k6] == 3):
-    #     QFLAG[k] = 213
+    elif (nbrImgAvg[k] < 2) and (solC[k6] == 3):
+        QFLAG[k] = 213
     
-    # elif ((nbrImgAvg[k] >= 2) and (nbrImgAvg[k] < 4)) and (solC[k6] == 1):
-    #     QFLAG[k] = 221
+    elif ((nbrImgAvg[k] >= 2) and (nbrImgAvg[k] < 4)) and (solC[k6] == 1):
+        QFLAG[k] = 221
     
-    # elif ((nbrImgAvg[k] >= 2) and (nbrImgAvg[k] < 4)) and (solC[k6] == 2):
-    #     QFLAG[k] = 222
+    elif ((nbrImgAvg[k] >= 2) and (nbrImgAvg[k] < 4)) and (solC[k6] == 2):
+        QFLAG[k] = 222
         
-    # elif ((nbrImgAvg[k] >= 2) and (nbrImgAvg[k] < 4)) and (solC[k6] == 3):
-    #     QFLAG[k] = 223
+    elif ((nbrImgAvg[k] >= 2) and (nbrImgAvg[k] < 4)) and (solC[k6] == 3):
+        QFLAG[k] = 223
         
-    # elif (nbrImgAvg[k] >= 4) and (solC[k6] == 1):
-    #     QFLAG[k] = 231
+    elif (nbrImgAvg[k] >= 4) and (solC[k6] == 1):
+        QFLAG[k] = 231
     
-    # elif (nbrImgAvg[k] >= 4) and (solC[k6] == 2):
-    #     QFLAG[k] = 232     
+    elif (nbrImgAvg[k] >= 4) and (solC[k6] == 2):
+        QFLAG[k] = 232     
     
-    # elif (nbrImgAvg[k] >= 4) and (solC[k6] == 3):
-    #     QFLAG[k] = 233     
+    elif (nbrImgAvg[k] >= 4) and (solC[k6] == 3):
+        QFLAG[k] = 233     
         
-    ##########################################################################
-    
-    ###################################################################################################
-    ###################################################################################################
+    ############################################################################################################
+    '''
+    ############################################################################################################
+    ############################################################################################################
         
-    # Extracting timestamp information from day of year and year for the dataset
+    # Derive timestamp information from DOY and year
     yyyy_doy = str(yyyy) + '+' + k
     timeStamp = datetime.datetime.strptime(yyyy_doy, "%Y+%j").strftime('%Y-%m-%d')
     
-    # Time series of daily average VIs saved as a text file in the given directory
+    # Writing daily averaged time series metrics for defined ROIs to the text file created earlier
     f4.write('{} {} {} {} {} {} {} {} {} {} {} {}\n'.format(timeStamp, k, avgR[k2], avgG[k3], \
     avgB[k4], avgGCC[k], stdGCC[k], avgRCC[k1], stdRCC[k1], nbrImgAvg[k], sElv[k7], QFLAG[k]))
 
@@ -554,7 +554,8 @@ if calendar.isleap(yyyy):
 else:
     nbrDays = 365
     
-# Check if there are complete annual data. Write 'NaN' if there are any missing DOYs
+# Check if there are complete annual data. 
+# Write 'NaN' if there are any missing DOYs
 if len(avgGCC) < nbrDays:
     
     # Find out the missing DOYs
@@ -581,16 +582,16 @@ if len(avgGCC) < nbrDays:
         # For all no data DOYs update QFLAG with 'NaN'
         QFLAG[str(mdoy)]        = np.float64('nan')
         
-        # Extracting timestamp information from day of year and year for the dataset
+        # Derive timestamp information from DOY and year
         yyyy_doy = str(yyyy) + '+' + str(mdoy)
         timeStamp = datetime.datetime.strptime(yyyy_doy, "%Y+%j").strftime('%Y-%m-%d')
         
-        # Time series of daily average VIs saved as a text file in the given directory
+        # Writing daily averaged time series metrics for defined ROIs to the text file created earlier
         f4.write('{} {} {} {} {} {} {} {} {} {} {} {}\n'.format(timeStamp, str(mdoy), avgR[str(mdoy)], \
         avgG[str(mdoy)], avgB[str(mdoy)], avgGCC[str(mdoy)], stdGCC[str(mdoy)], avgRCC[str(mdoy)], \
         stdRCC[str(mdoy)], nbrImgAvg[str(mdoy)], sElv[str(mdoy)], QFLAG[str(mdoy)]))
 
-# Close file
+# Close the file
 f4.close()
        
 ################################################################################################################
@@ -616,7 +617,7 @@ for item in test:
         os.remove(os.path.join(dir_name, item))
 
 ################################################################################################################
-# Time series of daily averaged vegetation indices plotted against corresponding DOY   
+# Plotting time series of daily averaged vegetation indices   
 ################################################################################################################
 
 # Plotting time series of GCC vegetation index
@@ -624,7 +625,8 @@ plt.figure(1)
 plt.rcParams['figure.figsize'] = (16,8)
 plt.ylim([0.3, 0.50 ]) 
 plt.plot([int(i) for i in DOY], GCC, 'o', color = 'grey', markersize = 4, alpha = 0.1, label = 'All image GCC')
-plt.plot([int(i) for i in doySnow], gccSnow, 'o', color = 'cornflowerblue', markersize = 4, alpha = 0.5, label = 'Snowy image GCC') 
+plt.plot([int(i) for i in doySnow], gccSnow, 'o', color = 'cornflowerblue', markersize = 4, alpha = 0.5, 
+         label = 'Snowy image GCC') 
 plt.plot([int(j) for j in sorted(avgGCC.keys())], [avgGCC[x] for x in sorted(avgGCC.keys())], 
          'r^', markersize = 6, mfc = 'none', label = 'Daily Average')
 plt.xticks(range(0, 365, 10), rotation = 45, fontsize = 16)
@@ -640,7 +642,8 @@ plt.figure(2)
 plt.rcParams['figure.figsize'] = (16,8)
 #plt.ylim([0.31, 0.38 ]) 
 plt.plot([int(i) for i in DOY], RCC, 'o', color = 'grey', markersize = 4, alpha = 0.1, label = 'All image RCC')
-plt.plot([int(i) for i in doySnow], rccSnow, 'o', color = 'cornflowerblue', markersize = 4, alpha = 0.5, label = 'Snowy image RCC')
+plt.plot([int(i) for i in doySnow], rccSnow, 'o', color = 'cornflowerblue', markersize = 4, alpha = 0.5, 
+         label = 'Snowy image RCC')
 plt.plot([int(j) for j in sorted(avgRCC.keys())], [avgRCC[x] for x in sorted(avgRCC.keys())], 
          'ro', markersize = 6, mfc = 'none', label = 'Daily Average')
 plt.xticks(range(0, 365, 10), rotation = 45, fontsize = 16)
