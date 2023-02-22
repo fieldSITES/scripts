@@ -19,10 +19,12 @@ Note: The script was tested on Windows environment in Python 3.7.6 version only.
       for internal use within Swedish Infrastructure for Ecosystem Science (SITES).
 
 Package installations:
-    1) astral   : pip install astral 
-    2) Open-CV  : pip install opencv-python
+    1) pytz     : pip install pytz
+    2) scipy    : pip install scipy
     3) numpy    : pip install numpy
-    4) pandas   : pip install pandas
+    4) astral   : pip install astral 
+    5) pandas   : pip install pandas
+    6) Open-CV  : pip install opencv-python
 
 Instructions for running the script:
     a) Make sure all the required modules are installed.
@@ -35,14 +37,19 @@ Instructions for running the script:
     d) Make sure the images are of same dimensions (For eg: 3072*2048)
     e) Create a new folder named 'SnowyImage' within the image directory and move all snowy 
        images to it. In case of no snowy images in the year, skip this step.
-    f) Define correct ROI coordinate for the chosen phenoCam location and station.                
-    h) Change ROI number in the headings of the time series data if there are ROI more than one.
+    f) Define correct ROI coordinate ('pts1' variable in the script) for the chosen phenoCam location 
+       and station. This is made available in a separate python script named: SITES_phenoCamROI.py
+    h) Change ROI number in the headings of the time series data if there are multiple ROIs.
+    i) Comment/Uncomment line of code dealing with QFLAG based on the temporal resolution of the 
+       phenoCam data.
+    j) Add metadata information as header in the .csv file exported before uploading it to the 
+       SITES data portal.
 
 Limitations of the script:
     a) Script can only take .jpg images as input.
     b) Script is programmed to handle only one ROI at a time.
     c) Script doesn't account for the change in camera field of view
-    c) Script is programmed to process only one year data at a time.
+    d) Script is programmed to process only one year data at a time.
 
 Example Data:
     # Freely downloadable from SITES data portal under SITES Spectral thematic program.
@@ -84,20 +91,23 @@ import matplotlib.pyplot as plt
 # Time zone definition
 timezone_name = 'Europe/Stockholm'
 
-# Geolocation definition for each phenoCam location
-#lat, lon = (68.353729, 18.816522)  # Abisko
-#lat, lon = (57.149750, 14.738164) # Asa
-#lat, lon = (64.182032, 19.556545) # Degerö
-#lat, lon = (64.256110, 19.774500) # SVB-Forest
-#lat, lon = (63.806340, 20.232638) # SWE-RBD-RBD-AGR-P01
-#lat, lon = (63.809446, 20.241503)  # SWE-RBD-RBD-AGR-P02
-#lat, lon = (55.668106, 13.108658) # Lönnstorp-P03, P02, P01
-lat, lon = (68.041889, 18.959309) # Tarfala-P01
-#lat, lon = (58.363846, 12.149787) # Skogaryd-CEM-P01
-#lat, lon = (58.363718, 12.149494) # Skogaryd-CEM-P02
-#lat, lon = (58.363555, 12.149921) # Skogaryd-CEM-P03
-#lat, lon = (58.381368, 12.146208) # Skogaryd-STD-P01
-#lat, lon = (59.72868, 15.47249)   # Grimsö
+# Geolocation (lat, long) definition for each phenoCam location
+# Update if new phenoCam locations are added to SITES
+camSITES = {'SWE-ANS-ANS-FOR-P01' : (68.353729, 18.816522), 
+            'SWE-ASA-NYB-FOR-P01' : (57.149750, 14.738164), 
+            'SWE-GRI-GRI-FOR-P01' : (59.728680, 15.472490),
+            'SWE-LON-SFA-AGR-P01' : (55.668106, 13.108658), 
+            'SWE-LON-SFA-AGR-P02' : (55.668106, 13.108658),
+            'SWE-LON-SFA-AGR-P03' : (55.668106, 13.108658),
+            'SWE-RBD-RBD-AGR-P01' : (63.806340, 20.232638), 
+            'SWE-RBD-RBD-AGR-P02' : (63.809446, 20.241503),
+            'SWE-SRC-CEN-FOR-P01' : (58.363846, 12.149787),
+            'SWE-SRC-CEN-FOR-P02' : (58.363718, 12.149494),
+            'SWE-SRC-CEN-FOR-P03' : (58.363555, 12.149921),
+            'SWE-SRC-STD-FOR-P01' : (58.381368, 12.146208),   
+            'SWE-SVB-DEG-MIR-P01' : (64.182032, 19.556545),
+            'SWE-SVB-SVB-FOR-P01' : (64.256110, 19.774500),
+            'SWE-TRS-LAE-GRA-P01' : (68.041889, 18.959309)}
  
 ################################################################################################################
 # Empty lists and dictionaries to store the corresponding vegetation indices value
@@ -123,6 +133,10 @@ SnowdictTag = {}
 ################################################################################################################
 # Display Region of Interest (ROI) selection in the image  
 ################################################################################################################
+# Get the first and last image from the file path
+imgList = sorted(glob.glob(os.path.join(thePath, '*.jpg')))
+img1st = os.path.basename(imgList[0]).split('_')[1]
+imglst = os.path.basename(imgList[-1]).split('_')[1]
 
 # Random selection of one image from the image folder to show the extent of ROI
 imgDir = thePath + '\\' + random.choice(os.listdir(thePath))
@@ -132,12 +146,18 @@ imName = os.path.basename(imgDir)
 stnName = imName.split('_')[0]
 yyyy = int(imName.split('_')[1][0:4])
 
+# Specific information related with the station
+splitStn = stnName.split('-')
+
+# Geolocation information for the chosen station
+lat, lon = camSITES[stnName]
+
 # Reading randomly selected image 
 img = cv2.imread(imgDir)
 
 # Define right ROI for the phenoCam data being processed.
 # ROI used in SITES are available in a python script i.e. SITES_phenoCamROI.py 
-pts1 = np.array([[200, 1750], [200, 550], [2900, 550], [2900, 1750]]) 
+pts1 = np.array([[100, 400], [280, 800], [1200, 800], [900, 350]]) # Change this ROI coordinate pairs 
 cv2.polylines(img, np.int32([pts1]), 1, (0, 0, 255), 10)
 
 ################################################################################################################
@@ -469,14 +489,14 @@ for (k, v), (k1, v1), (k2, v2), (k3, v3), (k4, v4), (k5, v5), (k6, v6), (k7, v7)
     Defining quality flagging scheme for each DOY based on number of images for computing daily average, 
     presence or absence of snow and solar elevation angle
     '''
-    ############################################################################################################
-    
-    if sTag[k5] == 1:
-        QFLAG[k] = 100
-    
+    ############################################################################################################        
+    """
     ############################################################################################################
     # Valid only for half hourly temporal resolution
     ############################################################################################################  
+    if sTag[k5] == 1:
+        QFLAG[k] = 100
+    
     elif (nbrImgAvg[k] < 3) and (solC[k6] == 1):
         QFLAG[k] = 211
         
@@ -504,10 +524,13 @@ for (k, v), (k1, v1), (k2, v2), (k3, v3), (k4, v4), (k5, v5), (k6, v6), (k7, v7)
     elif (nbrImgAvg[k] >= 6) and (solC[k6] == 3):
         QFLAG[k] = 233 
     
-    '''
+    """
     ############################################################################################################
-    # Valid only for hourly temporal resolution
+    # Valid only for hourly/bi-hourly temporal resolution
     ############################################################################################################
+    if sTag[k5] == 1:
+        QFLAG[k] = 100
+    
     elif (nbrImgAvg[k] < 2) and (solC[k6] == 1):
         QFLAG[k] = 211
         
@@ -534,9 +557,7 @@ for (k, v), (k1, v1), (k2, v2), (k3, v3), (k4, v4), (k5, v5), (k6, v6), (k7, v7)
     
     elif (nbrImgAvg[k] >= 4) and (solC[k6] == 3):
         QFLAG[k] = 233     
-        
-    ############################################################################################################
-    '''
+            
     ############################################################################################################
     ############################################################################################################
         
@@ -602,7 +623,8 @@ f4.close()
 df = pd.read_table(path_avgGCC, delim_whitespace=True)
 
 # Export the dataframe as a .csv file
-fileName = os.path.join(thePath + r'\CSV\{}_{}_L3_daily.csv'.format(stnName, yyyy))
+temp = 'SITES_' + splitStn[-1] + '-GCC-RCC_' + splitStn[1] + '_' + splitStn[2] + '_' + img1st + '-' + imglst
+fileName = os.path.join(thePath + r'\CSV\{}_L3_daily.csv'.format(temp))
 pd.concat([df[:1], df.iloc[1:].sort_values(by = 'TIMESTAMP')], ignore_index = True, \
           axis = 0).to_csv(fileName, index=False, na_rep='NaN', date_format='%Y-%m-%d')
 
