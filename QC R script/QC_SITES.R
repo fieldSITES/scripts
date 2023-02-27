@@ -2,7 +2,7 @@
 
 ###################################################################################################################################################
 ###################################################################################################################################################
-####################################                                                      #########################################################
+#######S#############################                                                      #########################################################
 ####################################    TO EXECUTE THE SCRIPT USE CTRL+SHIFT+S            #########################################################
 ####################################                                                      #########################################################   
 ### To enhance readability, R Studio is recommended. Increase the size of the script-window that the this box is aligned to ensure ################
@@ -81,6 +81,7 @@ thresholds_used <- read_lines(threshold_file)
 
 #### Load SITES parameters ####
 SITES_Parameters <- readline(prompt="Enter name of SITES parameter file including extension (.R):")
+
 
 #### Get user input where the output should be saved ####
 output_save_location <- readline(prompt="Enter the path where the Output (Folder for SITES and QC) should be saved. (Leaving it empty will save all the files in the folder where the script was opened): ")
@@ -320,9 +321,8 @@ while (i<= nrow(QC_data_GF_DT_T_MM_Rad)) {
       
       
       #For some parameters, negative values are impossible but sometimes the measurement is not precise enough and therefore values that are above the Min-threshold but below "0" will be set to "0"
-      if (get(var_rad,QC_data_GF_DT_T_MM_Rad)[i]<0) {
-        get(var_rad,QC_data_GF_DT_T_MM_Rad)[i]<-0
-      }
+      
+       
       i <- i+1
     } 
     
@@ -377,9 +377,7 @@ while (i<= nrow(QC_data_GF_DT_T_MM_PAR)) {
     
     
     if (get(var_par, QC_data_GF_DT_T_MM_PAR)[i] >MinPAR[QC_data_GF_DT_T_MM_PAR$Month[i]] & get(var_par, QC_data_GF_DT_T_MM_PAR)[i]< MaxPAR[QC_data_GF_DT_T_MM_PAR$Month[i]]){
-      if (get(var_par, QC_data_GF_DT_T_MM_PAR)[i]<0) {
-        get(var_par, QC_data_GF_DT_T_MM_PAR)[i]<-0
-      }
+   
       i <- i+1
     }
     else {
@@ -432,9 +430,7 @@ while (i<= nrow(QC_data_GF_DT_T_MM_WTmp1)) {
     
     if (get(var_Wtmp1, QC_data_GF_DT_T_MM_WTmp1)[i] >MinWtemp[QC_data_GF_DT_T_MM_WTmp1$Month[i]] & get(var_Wtmp1, QC_data_GF_DT_T_MM_WTmp1)[i]< MaxWtemp[QC_data_GF_DT_T_MM_WTmp1$Month[i]]){
      
-       if (get(var_Wtmp1, QC_data_GF_DT_T_MM_WTmp1)[i]<0) {
-        get(var_Wtmp1, QC_data_GF_DT_T_MM_WTmp1)[i]<-0
-      }
+     
       i <- i+1
     }
     else {
@@ -484,9 +480,7 @@ if (nchar(var_Wtmp3) == 0) {
       
       if (get(var_Wtmp3, QC_data_GF_DT_T_MM_WTmp3)[i] >MinWtemp[QC_data_GF_DT_T_MM_WTmp3$Month[i]] & get(var_Wtmp3, QC_data_GF_DT_T_MM_WTmp3)[i]< MaxWtemp[QC_data_GF_DT_T_MM_WTmp3$Month[i]]){
         
-        if (get(var_Wtmp3, QC_data_GF_DT_T_MM_WTmp3)[i]<0) {
-          get(var_Wtmp3, QC_data_GF_DT_T_MM_WTmp3)[i]<-0
-        }
+      
         i <- i+1
       }
       else {
@@ -538,9 +532,7 @@ if (nchar(var_Wtmp15) == 0) {
       
       if (get(var_Wtmp15, QC_data_GF_DT_T_MM_WTmp15)[i] >MinWtemp[QC_data_GF_DT_T_MM_WTmp15$Month[i]] & get(var_Wtmp15, QC_data_GF_DT_T_MM_WTmp15)[i]< MaxWtemp[QC_data_GF_DT_T_MM_WTmp15$Month[i]]){
         
-        if (get(var_Wtmp15, QC_data_GF_DT_T_MM_WTmp15)[i]<0) {
-          get(var_Wtmp15, QC_data_GF_DT_T_MM_WTmp15)[i]<-0
-        }
+       
         i <- i+1
       }
       else {
@@ -1107,11 +1099,10 @@ QC_data_final_SITES <- QC_data_final
 
 
 
-### Load the SITES parameters file
-source(paste(SITES_Parameters))
+
 
 #### OUTPUT FOR SITES ####
-  
+source(paste(SITES_Parameters))
 # Count how many different SITES outputs were predefined in the SITES_parameters file
 count_SITES_total<- length((ls(pattern = "col_daily_")))
 
