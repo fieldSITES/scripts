@@ -1,55 +1,75 @@
-##############################################################################################################
 """
+***************************************************************************************************************
+#########################################
+Second step in Satellite data processing
+
+Reprojection to SWEREF99_TM and clipping
 Created on Thu May  5 11:44:51 2022
+########################################
 
-This python script uses command line GDAL tools for reprojecting the satellite
-data (S2) products to SWEREF99_TM (EPSG:3006). Further, the re-projected data
-are clipped to the spatial extent defined within SITES. 
+This python script uses command line Geodata Abstraction Library (GDAL) tools for reprojecting to SWEREF99_TM
+(EPSG:3006) projection system and clipping to defined spatial extent for each of the SITES research station. 
+The HRVPP data products downloaded using the downloading script called 'SITES_satelliteDownload_HRVPP.py' will
+be the input for this script. 
 
-To know more about the GDAL command line tools:
-    
-    https://gdal.org/programs/gdalwarp.html#gdalwarp
-    https://gdal.org/programs/gdal_calc.html#gdal-calc
-    
-To know more about the Anaconda3 module running on Terminal, check LUNARC 
-documentation: https://lunarc-documentation.readthedocs.io/en/latest/Python/
+Note: The script was tested on LINUX environment (i.e. LUNARC AURORA) in Python 3.9.12 version only. 
+      This script is only for the internal use within SITES.
 
-To know more about the satellite data products:
-    
-    https://land.copernicus.eu/user-corner/technical-library/product-user-manual-of-seasonal-trajectories/
-    
-Note: This script is only for internal use within SITES Spectral.
+Instructions for running the script:
+    1) Copy the python script 'SITES_satelliteData_harmonize.py' and the bash script 
+       'SITES_satelliteData_harmonize.sh' in the same path as that of the downloaded 
+       data products from step 1 of satellite data processing.
+    2) Run the executable bash script.        
+    3) Within the bash script, all the package such as Anaconda environment, 
+       GDAL module and a line to run the python script are added as:
+            
+            ***************************************************************
+            # Get the full functionality of the Anaconda environment 
+            module load Anaconda3
+            source config_conda.sh
+           
+            # Load the GDAL module
+            module load GCC/9.3.0  OpenMPI/4.0.3 GDAL/3.0.4-Python-3.8.2
+            
+            # Run the python script
+            python3 SITES_satelliteData_harmonize.py
+            ***************************************************************
+            
+    4) Follow the instructions displayed on the Terminal screen.
 
-Important information to run this script:
+Limitations of the script:
+    a) Script is programmed to reproject and clip only 6 HRVPP data products for
+       stations defined within SITES.
     
-    1) Run the Terminal on AURORA.
-    2) Load Anaconda3 module running the following command lines on Terminal:
+Important information:
+    a) Read more about GDAL command line tools:
+       https://gdal.org/programs/gdalwarp.html#gdalwarp
+       https://gdal.org/programs/gdal_calc.html#gdal-calc
+       
+    b) Read more about the HRVPP data products:
+       https://land.copernicus.eu/user-corner/technical-library/product-user-manual-of-seasonal-trajectories/
+       
+    c) Read more about Anaconda3 module running on LUNARC:
+       https://lunarc-documentation.readthedocs.io/en/latest/Python/
     
-        module load Anaconda3
-        source config_conda.sh
-    
-    3) Load the GDAL module on terminal
-    
-        module load GCC/9.3.0  OpenMPI/4.0.3 GDAL/3.0.4-Python-3.8.2
-        
-    4) Run this python script on terminal:
-        
-        python /projects/eko/fs1/SITES_Spectral/FTPdatabase/Satellites/satDataPrepare.py
-        
-        General form: python Complete path of python script
-    
-    5) Follow the instructions displayed on the Terminal screen once you run the script
-   
+    d) Read more about the WEkEO data service documentation:
+       https://www.wekeo.eu/docs 
+       
+For enquiries, please send an email to: shangharsha.thapa@nateko.lu.se
+                                        lars.eklundh@nateko.lu.se
+                                        
 @author: Shangharsha
 """
-##############################################################################################################
+################################################################################################################
 # Importing required modules
+################################################################################################################
 import os
 import glob
 import shutil
 
-##############################################################################################################
+################################################################################################################
 # Predefine dictionary to store 'station' information
+################################################################################################################
 stnName = ['Abisko', 'Asa', 'Bolmen', 'Erken', 'Grimso', 'Lonnstorp', 'Robacksdalen', 
            'Skogaryd', 'Svartberget', 'Tarfala']
 
@@ -63,7 +83,7 @@ for idx, stn in enumerate(stnName):
 
 print('\n')
 
-# Ask from user to select the station for which to prepare the satellite data products   
+# Ask from user to select the station to prepare the satellite data products   
 station = int(input("Choose one of the SITES station (For example, 0 to prepare data for Abisko): "))
 
 print('\n')
@@ -95,10 +115,9 @@ stnPath = os.path.join(basePath, stnName[station])
 # All the data within these folders will be reprojected and clipped
 folders = ['PPI', 'SOSD', 'EOSD', 'LENGTH', 'AMPL', 'SPROD']
 
-##############################################################################################################
-
-##############################################################################################################
+################################################################################################################
 # Iterate through the folders
+################################################################################################################
 for folder in folders:
     
     # Join the station path to the sub-folders within it
@@ -205,8 +224,9 @@ for folder in folders:
     print('Successfully reprojected all {} data to SWEREF99_TM'.format(folder))
     print('\n')
     
-    ##############################################################################################################
+    ################################################################################################################
     # Create a new folder inside the sub-folders to store the clipped images
+    ################################################################################################################
     try:
         tempPath2 = os.path.join(subPath, 'Clipped')
         os.mkdir(tempPath2)
@@ -296,7 +316,7 @@ for folder in folders:
     print('Successfully clipped all {} data to defined spatial extent'.format(folder))
     print('\n')
     
-    ##############################################################################################################
+    ################################################################################################################
     # Remove the 'Reprojected' folder from the directory
     shutil.rmtree(tempPath1, ignore_errors = False) #Making ignore_errors = True will not raise a FileNotFoundError
 
@@ -304,6 +324,7 @@ print('Sucessfully reprojected and clipped all satellite data products for the s
 print('Check the station folder file path to see the final data.')
 print('\n')
     
-##################################################################################################################
+################################################################################################################
+################################################################################################################
 
     
