@@ -1,56 +1,74 @@
-##############################################################################################################
 """
+***************************************************************************************************************
+#######################################
+First step in Satellite data processing
+
+Selective HRVPP product downloading
 Created on Tue Apr 13 13:08:10 2021
+######################################
 
-This python script allows to download satellite (S2) derived data product for research stations 
-within SITES (Swedish Infrastructure for Ecosystem Science). The script once run, automatically
-creates a folder named after the station chosen by the user inside which, there will be folders
-created for each satellite data products related with Plant Phenology Index (PPI) and phenology 
-and productivity parameters.
+This python script allows to download satellite (S2) derived selective HRVPP data product for research 
+stations within SITES (Swedish Infrastructure for Ecosystem Science). The script once run, creates new
+folder automatically which is named after the station chosen by the user. There will be folders inside
+which are created for various HRVPP data products defined within SITES Spectral thematic program. Data
+products are related with Plant Phenology Index (PPI) and phenology and productivity parameters. 
 
-Note: This script is only for internal use within SITES Spectral.
-
-To read more about the hda python package, please visit:
-https://www.wekeo.eu/docs/hda-python-lib
-
-Important information to run this script on Terminal:
-    
+Note: The script was tested on LINUX environment (i.e. LUNARC AURORA) in Python 3.9.12 version only. 
+      This script is only for the internal use within SITES.
+      
+Instructions for running the script on Terminal:
     1) At the home directory, there should be a hidden .hdarc file with login credentials to 
        access the WEkEO data portal for downloading various satellite products.
-    
     2) There should be a base .json file called 'srcSITES.json' on the same file path as this
        python script.
-    
     3) Run the Terminal
-    
     4) Type the following command line script on Terminal:
         
-        python /projects/eko/fs1/SITES_Spectral/FTPdatabase/Satellites/download_VIvpp.py /projects/eko/fs1/SITES_Spectral/FTPdatabase/Satellites/srcSITES.json
-
+        python /projects/eko/fs1/SITES_Spectral/FTPdatabase/Satellites/download_VIvpp.py .../Satellites/srcSITES.json
         General form of this cmd line: python CompletePythonFilePath.py CompleteJSONFilePath.json
     
     5) Follow the instructions displayed on the screen once you run the script
+
+Limitations of the script:
+    a) Script can only download data for SITES station.
+    b) Script can only download 6 seasonality parameters.
+    
+Important information:
+    a) Read more about the hda python package:
+       https://www.wekeo.eu/docs/hda-python-lib
+       
+    b) Read more about the HRVPP data products:
+       https://land.copernicus.eu/user-corner/technical-library/product-user-manual-of-seasonal-trajectories/
+       
+    c) Read more about the WEkEO data service documentation:
+       https://www.wekeo.eu/docs 
+       
+For enquiries, please send an email to: shangharsha.thapa@nateko.lu.se
+                                        lars.eklundh@nateko.lu.se
     
 @author: Shangharsha
 """
-##############################################################################################################
+################################################################################################################
 # Importing required modules
+################################################################################################################
 import os
 import sys
 import json
 import shutil
 from hda import Client
 
-##############################################################################################################
+################################################################################################################
 
 # Define a specific path for an interpreter to search for
 # Login information to Weekeo website is kept within this interpreter
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
-##############################################################################################################
+################################################################################################################
 # Predefine dictionary to store 'station' information
-stnName = ['Abisko', 'Asa', 'Bolmen', 'Erken', 'Grimso', 'Lonnstorp', 'Robacksdalen', 
-           'Skogaryd', 'Svartberget', 'Tarfala']
+################################################################################################################
+# Update this variable when there are more SITES station
+stnName = ['Abisko', 'Asa', 'Bolmen', 'Erken', 'Grimso', 'Lonnstorp', 
+           'Robacksdalen', 'Skogaryd', 'Svartberget', 'Tarfala']
 
 print('\n')
 
@@ -62,7 +80,7 @@ for idx, stn in enumerate(stnName):
 
 print('\n')
 
-# Ask from user to select the station for which to download the satellite data products   
+# Ask from user to select the station to download the satellite data products   
 station = int(input("Choose one of the SITES station (For example, 0 to download data for Abisko): "))
 
 # Ask from user which year's satellite data to download
@@ -98,8 +116,9 @@ tileID = {0: '33WXR',
           8: '34WDS',
           9: '33WXR'}
 
-##############################################################################################################
+################################################################################################################
 # Main program to communicate with Weekeo website and download various satellite data
+################################################################################################################
 # product as mentioned in the .json file              
 c = Client(debug=True)
 
@@ -114,9 +133,9 @@ if not queries:
 dst = os.path.dirname(queries[0]) + '/copysrcSITES.json'
 shutil.copy2(queries[0], dst)
 
-###############################################################################################################
+################################################################################################################
 # Automatically creating folders in the directory to save results into
-###############################################################################################################
+################################################################################################################
 
 # Try-except block is to pass overwrite directories if exists
 folders = [stnName[station]]
@@ -145,8 +164,9 @@ for items in subFolders:
     except:
         pass
         
-##############################################################################################################       
+################################################################################################################      
 # Iterate through the product list to be downloaded
+################################################################################################################
 for prod in valueList:
     
     # Check condition for downloading PPI and its QFLAG layer
@@ -288,11 +308,8 @@ print('\n')
 # Remove the copy version of .json file
 os.remove(dst)
 
-##############################################################################################################
-# Download Vegetation Phenology and Productivity Quality Flag (VPP-QFLAG)
-# For more information:
-'''
-https://land.copernicus.eu/user-corner/technical-library/product-user-manual-of-seasonal-trajectories/
-'''
+################################################################################################################
+################################################################################################################
+
 
 
