@@ -1,0 +1,1 @@
+Collection of R scripts to quality control raw logger data. A very basic and not strict approach to clean data from sensor failures, measuring errors and other errors. Includes a user manual, example data and the R scripts. Last updated: 08 Feb. 2023 
