@@ -1,0 +1,33 @@
+{
+  "datasetId": "EO:EEA:DAT:CLMS_HRVPP_ST",
+  "boundingBoxValues": [
+    {
+      "name": "bbox",
+      "bbox": [
+        13.106149249710294,
+        55.662415031913945,
+        13.123470219762806,
+        55.67128862601792
+      ]
+    }
+  ],
+  "dateRangeSelectValues": [
+    {
+      "name": "temporal_interval",
+      "start": "2017-01-01T00:00:00.000Z",
+      "end": "2019-12-31T00:00:00.000Z"
+    }
+  ],
+  "stringChoiceValues": [
+    {
+      "name": "productType",
+      "value": "PPI"
+    }
+  ],
+  "stringInputValues": [
+    {
+      "name": "tileId",
+      "value": "33UUB"
+    }
+  ]
+}
