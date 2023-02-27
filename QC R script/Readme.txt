@@ -1,6 +1,6 @@
 Collection of R scripts to quality control raw logger data. A very basic and not strict approach to clean data from sensor failures, measuring errors and other errors. Includes a user manual, example data and the R scripts. 
 
-Runs on R version: 4.0.3 (2020-10-10)
+Stable on R version: 4.0.3 (2020-10-10)
 Packages & Version:
 readr (2.1.2)
 lubridate(1.8.0)
