@@ -1,0 +1,26 @@
+{
+  "datasetId": "EO:EEA:DAT:CLMS_HRVPP_VPP",
+  "dateRangeSelectValues": [
+    {
+      "name": "temporal_interval",
+      "start": "2018-01-01T00:00:00.000Z",
+      "end": "2018-12-31T00:00:00.000Z"
+    }
+  ],
+  "stringChoiceValues": [
+    {
+      "name": "productType",
+      "value": "SOSD"
+    },
+    {
+      "name": "productGroupId",
+      "value": "s1"
+    }
+  ],
+  "stringInputValues": [
+    {
+      "name": "tileId",
+      "value": "33VUC"
+    }
+  ]
+}
