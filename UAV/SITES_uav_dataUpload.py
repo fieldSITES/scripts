@@ -119,6 +119,8 @@ siteName_u2020 = {'ANS_MJA'  : 'https://meta.fieldsites.se/resources/sites/miell
                   'RBD_RBDN' : ['https://meta.fieldsites.se/resources/sites/robacksdalen-01-2020',
                                 'https://meta.fieldsites.se/resources/sites/robacksdalen-02-2020',
                                 'https://meta.fieldsites.se/resources/sites/robacksdalen-03'],
+                  'SVB_DEG'  : 'https://meta.fieldsites.se/resources/sites/degero-uav',
+                  'SVB_SVB'  : 'https://meta.fieldsites.se/resources/sites/svartberget-uav',
                   'TRS_LAE'  : 'https://meta.fieldsites.se/resources/sites/laevasvagge-uav-2020'}
 
 # Flight locations from 2021 
@@ -134,6 +136,8 @@ siteName_f2021 = {'ANS_MJA'  : 'https://meta.fieldsites.se/resources/sites/miell
                   'SRC_MAD'  : 'https://meta.fieldsites.se/resources/sites/foljemaden-uav-2021',
                   'RBD_RBDN' : ['https://meta.fieldsites.se/resources/sites/robacksdalen-01-2021',
                                 'https://meta.fieldsites.se/resources/sites/robacksdalen-02-2021'],
+                  'SVB_DEG'  : 'https://meta.fieldsites.se/resources/sites/degero-uav',
+                  'SVB_SVB'  : 'https://meta.fieldsites.se/resources/sites/svartberget-uav',
                   'TRS_LAE'  : 'https://meta.fieldsites.se/resources/sites/laevasvagge-uav-2021'}
 
 ################################################################################################################
