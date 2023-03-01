@@ -359,7 +359,7 @@ f1.close()
 
 # Delete all the created .json files
 [os.remove(f) for f in glob.glob('*.json')]
-        
+
 print ('Finished uploading all .zip files within the defined path.')
 print ('Check the log.txt file for upload status and PID after running the script.')
 print ('It might take few hours until it is visible in the data portal.')
