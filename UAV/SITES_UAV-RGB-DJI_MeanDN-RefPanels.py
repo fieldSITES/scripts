@@ -104,14 +104,14 @@ def zoom(event):
         # Get the coordinates of the clicked point
         x, y = int(event.xdata), int(event.ydata)
         # Set the limits for zooming
-        xlim = (max(0, x - 50), min(image.shape[1], x + 50))
-        ylim = (max(0, y - 50), min(image.shape[0], y + 50))
+        xlim = (max(0, x - 80), min(image.shape[1], x + 80))
+        ylim = (max(0, y - 80), min(image.shape[0], y + 80))
         ax.set_xlim(xlim)
         ax.set_ylim(ylim)
         plt.draw()
         
         # Store the zoomed extent
-        rowCol = [int(event.ydata - 50), int(event.ydata + 50), int(event.xdata - 50), int(event.xdata + 50)]
+        rowCol = [int(event.ydata - 80), int(event.ydata + 80), int(event.xdata - 80), int(event.xdata + 80)]
 
 
 # Define figure size
@@ -186,37 +186,33 @@ for im in imgList:
         # Display created ROI on top of the image
         roi.display_roi()
         roi_names.append(idx)
-        
-        # Extracting a binary mask
-        # RGB image with dimension 3, to get mask you need to make a call like so:
-        mask = roi.get_mask(img[:,:,0])
-        
+               
         # Compute mean and standard deviation over that ROI.
         # Red Channel
-        mean_dn_red = np.mean(img[:,:,0][mask])
-        std_dn_red = np.std(img[:,:,0][mask])
+        data_red = roi.get_mean_and_std(img[:,:,0][ymin:ymax, xmin:xmax])
+        mean_red, std_red = data_red
         
         # Green Channel
-        mean_dn_green = np.mean(img[:,:,1][mask])
-        std_dn_green = np.std(img[:,:,1][mask])
+        data_gre = roi.get_mean_and_std(img[:,:,1][ymin:ymax, xmin:xmax])
+        mean_gre, std_gre = data_gre
         
         # Blue Channel
-        mean_dn_blue = np.mean(img[:,:,2][mask])   
-        std_dn_blue = np.std(img[:,:,2][mask])
+        data_blu = roi.get_mean_and_std(img[:,:,2][ymin:ymax, xmin:xmax])
+        mean_blu, std_blu = data_blu
         
         # Mean DN for R, G, and B channel for user drawn ROI
         # Note user should always draw ROI on similar fashion
         # In this case, first 9%, then 23% and finally 44%
-        tempMean_RGB = [mean_dn_red, mean_dn_green, mean_dn_blue]
-        tempStd_RGB  = [std_dn_red, std_dn_green, std_dn_blue]
-        
+        tempMean_RGB = [mean_red, mean_gre, mean_blu]
+        tempStd_RGB = [std_red, std_gre, std_blu]
+                
         # Update the dictionaries with mean and standard deviation of ROI drawn by user
         roi_means[idx] = tempMean_RGB
         roi_stds[idx]  = tempStd_RGB
-   
+                                   
     meanDN_Panels[imgName] = roi_means
     stdDN_Panels[imgName] = roi_stds
-    
+       
     ax.text(3, 5, imgName, fontsize=12, color='blue', bbox=dict(facecolor='whitesmoke', alpha=0.5))
     plt.legend(roi_names, loc = 'best')
     outName = os.path.join(thePath + r'\Plots\{}.png'.format(imgName))
