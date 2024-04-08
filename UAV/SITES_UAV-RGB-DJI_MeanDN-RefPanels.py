@@ -23,7 +23,7 @@ Instructions for running the script:
     b) Run Anaconda Prompt or general Terminal where you can locate the installed Python.
     c) Use the following command to run (Give complete path to where your script is located):
     
-                (base) D:\MScGeomatics>python ".../SITES_extractMeanDN_RefPanels.py"
+                (base) D:\MScGeomatics>python ".../SITES_UAV-RGB-DJI_MeanDN-RefPanels.py"
                 
     d) Follow the instructions displayed on the Terminal screen once you run the script.
     e) Provide complete path to where the calibration images are located. And hit 'Enter'.
