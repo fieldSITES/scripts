@@ -1,0 +1,30 @@
+TITLE: Chemical variables - Lake from Bolmen, southern Sweden.
+SITES STATION: Bolmen Research Station
+TIME PERIOD: YYYY-MM-DD - YYYY-MM-DD
+TIME RESOLUTION: irregular
+TIME ZONE: UTC +1
+SAMPLING POINT: Bolmen - Subbasin North-east
+LATITUDE: 56.996567
+LONGITUDE: 13.783417
+Altitude: 141.4 m a.s.l.
+
+FILE RETRIVED FROM: https://data.fieldsites.se
+DATA POLICY: SITES data is licensed under a Creative Commons Attribution 4.0 international license (http://creativecommons.org/licenses/by/4.0/).
+
+PARAMETERS & UNITS: ABS (dimensionless)
+
+COMMENTS: Sample taken @ -0.25m using a in stream grab sampler.
+
+METHODS:
+Absorbance at 254nm wavelength: Analysed with an Hach-Lange DR6000 using a 10 mm cuvette. Direct reading at 254nm (Method 10054). Measurements on filtered water (pore size: 0.45 µm).
+Absorbance at 410nm, 420nm, 436nm wavelength: Analysed with an Hach-Lange DR6000 using a 50 mm cuvette. Direct reading at respective wavelength. Measurements on filtered water (pore size: 0.45 µm).
+
+PARAMETER AND COLUMN INFO:
+TIMESTAMP - Time in [YYYY-MM-DD (hh:mm)] UTC+1
+ABS254nm - Absorbance at 254nm wavelength (dimensionless). Sample taken @-0.25m.
+ABS410nm - Absorbance at 410nm wavelength (dimensionless). Sample taken @-0.25m.
+ABS420nm - Absorbance at 420nm wavelength (dimensionless). Sample taken @-0.25m.
+ABS436nm - Absorbance at 436nm wavelength (dimensionless). Sample taken @-0.25m.
+
+####
+TIMESTAMP,ABS254nm,ABS410nm,ABS420nm,ABS436nm

@@ -1,0 +1,36 @@
+TITLE: Lake variables - Sonde profiling from Lake Bolmen, southern Sweden.
+SITES STATION: Bolmen Research Station
+TIME PERIOD: yyyy-mm-dd - yyyy-mm-dd 
+TIME RESOLUTION: irregular
+TIME ZONE: UTC +1
+SAMPLING POINT: Bolmen - Subbasin North-east
+LATITUDE: 56.996567
+LONGITUDE: 13.783417
+ALTITUDE: 141.4 m a.s.l.
+
+FILE RETRIEVED FROM: https://data.fieldsites.se
+DATA POLICY: SITES data is licensed under a Creative Commons Attribution 4.0 international license (http://creativecommons.org/licenses/by/4.0/).
+
+COMMENTS: Manual lake profiling using sonde technology, in this case a YSI EXO2 Sonde profiler.
+For each profile the sonde is lowered by hand throughout the water column pausing the sonde for 5 seconds at each 1 meter intervals. The probe is measuring in 2 second intervals.
+
+At Lake Bolmen the water level requirements aim to not go under the water level 140.9 m a.s.l. for the period 26/4 – 31/8 every year. During the period 1/9 – 20/11 there is a legal right to lower the water level further down to 140.5 m a.s.l. and to hold it on a minimum level of 140.5 m a.s.l. until the 16/3 of the following year, where Statkraft is obliged to fill Bolmen up to a minimum of 140.9 m a.s.l. Since the water levels are a part of the given legal conditions to produce hydro power Statkraft has the right to exploit the levels but never go under. Therefore, the measured profile depth can vary between sampling dates.
+
+PARAMETERS & UNITS: DN (#), D_Water (m), TW (°C), EC (µS cm-1), SCOND (µS cm-1), pH (-), ORP (mV), TURBF (FNU), CHLF (µg L-1), O2SAT (%), O2 (mg L-1), FDOM (µg L-1)
+
+PARAMETER AND COLUMN INFO:
+TIMESTAMP - Time in [YYYY-MM-DD hh:mm] UTC+1 
+DN - Digital number of profile (#), note: numbers refer to differentiation between individual measurement cicles.
+D_Water - Water depth (m), EXO2 internal pressure sensor. Single measurement 
+TW - Water temperature (°C), EXO Conductivity & Temperature Digital Smart Sensor. Single measurement
+EC - Electrical conductivity (µS cm-1), EXO Conductivity & Temperature Digital Smart Sensor. Single measurement 
+SCOND - Specific Conductivity (µS cm-1) @ 25°C, EXO Conductivity & Temperature Digital Smart Sensor. Single measurement 
+pH - dimensionless, EXO pH & ORP Digital Smart Sensor. Single measurement 
+ORP - Oxidation Reduction Potential (mV), pH & ORP Digital Smart Sensor. Single measurement 
+TURBF - Turbidity_FNU (Formazin Nephelometric Unit (FNU)),EXO Turbidity Digital Smart Sensor.
+CHLF - Chlorophyll Fluorescence (µg L-1), EXO Total Algae digital smart sensor (chlorophyll & phycocyanin). Single measurement 
+O2SAT - Oxygen saturation (%), EXO Optical Dissolved Oxygen Digital Smart Sensor. Single measurement 
+O2 - Dissolved Oxygen (mg L-1),  EXO Optical Dissolved Oxygen Digital Smart Sensor. Single measurement 
+FDOM - Fluorescent dissolved organic matter (µg L-1), EXO Fluorescent Dissolved Organic Matter Digital Smart Sensor. Single measurement 
+####
+TIMESTAMP,DN,D_Water,TW,EC,SCOND,pH,ORP,TURBF,CHLF,O2SAT,O2,FDOM
